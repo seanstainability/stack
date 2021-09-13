@@ -13,7 +13,9 @@ class StackImpl implements Stack {
   get size() {
     return this._size;
   }
+  constructor(private capacity: number) {}
   push(value: string) {
+    if (this.size === this.capacity) throw new Error("Stack is Full!");
     const node: StackNode = { value, next: this.head };
     this.head = node;
     this._size++;
@@ -28,7 +30,7 @@ class StackImpl implements Stack {
   }
 }
 
-const stack = new StackImpl();
+const stack = new StackImpl(10);
 stack.push("🍎");
 stack.push("🍌");
 stack.push("🥑");
