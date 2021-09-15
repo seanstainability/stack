@@ -3,23 +3,29 @@ interface Stack {
   push(value: string): void;
   pop(): string;
 }
+
 type StackNode = {
   readonly value: string;
   readonly next?: StackNode;
 };
+
 class StackImpl implements Stack {
   private _size: number = 0;
   private head?: StackNode;
+
   get size() {
     return this._size;
   }
+
   constructor(private capacity: number) {}
+
   push(value: string) {
     if (this.size === this.capacity) throw new Error("Stack is Full!");
     const node: StackNode = { value, next: this.head };
     this.head = node;
     this._size++;
   }
+
   pop() {
     // null == undefined, null !== undefined
     if (this.head == null) throw new Error("Stack is Empty!");
