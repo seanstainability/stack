@@ -1,17 +1,17 @@
-interface Stack {
+interface Stack<T> {
   readonly size: number;
-  push(value: string): void;
-  pop(): string;
+  push(value: T): void;
+  pop(): T;
 }
 
-type StackNode = {
-  readonly value: string;
-  readonly next?: StackNode;
+type StackNode<T> = {
+  readonly value: T;
+  readonly next?: StackNode<T>;
 };
 
-class StackImpl implements Stack {
+class StackImpl<T> implements Stack<T> {
   private _size: number = 0;
-  private head?: StackNode;
+  private head?: StackNode<T>;
 
   get size() {
     return this._size;
@@ -19,9 +19,9 @@ class StackImpl implements Stack {
 
   constructor(private capacity: number) {}
 
-  push(value: string) {
+  push(value: T) {
     if (this.size === this.capacity) throw new Error("Stack is Full!");
-    const node: StackNode = { value, next: this.head };
+    const node: StackNode<T> = { value, next: this.head };
     this.head = node;
     this._size++;
   }
@@ -36,11 +36,20 @@ class StackImpl implements Stack {
   }
 }
 
-const stack = new StackImpl(10);
+const stack = new StackImpl<string>(10);
 stack.push("🍎");
 stack.push("🍌");
 stack.push("🥑");
 stack.push("🍉");
 while (stack.size !== 0) {
   console.log(stack.pop());
+}
+
+const stack2 = new StackImpl<number>(10);
+stack2.push(12);
+stack2.push(34);
+stack2.push(56);
+stack2.push(78);
+while (stack2.size !== 0) {
+  console.log(stack2.pop());
 }
